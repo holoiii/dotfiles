@@ -1,75 +1,69 @@
-"Search highlighting
+" Initiate Pathogen
+execute pathogen#infect()
+
+filetype plugin indent on
+
+" Use VIM settings, rather than VI settings
+set nocompatible
+
+" Search highlighting
 set hlsearch
 
-" CTRL-P max files, 0 = infinite
-let g:ctrlp_max_files = 0
-
-" Set syntax
+" Enable syntax highlighting
 syntax on
 
-" Set leader
-let mapleader = ","
+" Insert mode uses pipe!
+let &t_SI = "\<Esc>[6 q"
+let &t_EI = "\<Esc>[0 q"
+let &t_SR = "\<Esc>[4 q"
 
-" Nerdtree toggling
-map <Leader>n :NERDTreeToggle<CR>
-
-" upon hitting escape to change modes,
+" Upon hitting escape to change modes,
 " send successive move-left and move-right
 " commands to immediately redraw the cursor
 inoremap <special> <Esc> <Esc>hl
 
-" don't blink the cursor
-set guicursor+=i:blinkwait0
+" Line numbers
+set nu
 
-" Insert mode uses pipe!
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+" Set leader
+let mapleader = ","
 
 " Open nerdtree to current file
 nmap <Bar> :NERDTreeFind<CR>
 
-" Line numbers
-set nu
+" Open current buffer in new tab
+nnoremap <silent> <Leader>t :tab split<CR>
 
-" Use Vim settings, rather then Vi settings (much better!).
+" Clear all marks
+nnoremap <silent> <Leader>M :MarkClear<CR>
 
-set nocompatible
+" Set available mark palette
+let g:mwDefaultHighlightingPalette='maximum'
 
-" Turn on the verboseness to see everything vim is doing.
-"set verbose=9
+" Widen/shrink split buffer with + and -
+if bufwinnr(1)
+  map + <c-W>>
+  map - <c-W><
+endif
 
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
-
-" I like 4 spaces for indenting
+" 4 spaces for indenting
 set shiftwidth=2
 
-" I like 4 stops
+" 4 stops
 set tabstop=4
 
 " Spaces instead of tabs
-
 set expandtab
 
-" Always  set auto indenting on
-set autoindent
+" Show the matching bracket for the last ')'?
+set showmatch
 
-" select when using the mouse
-set selectmode=mouse
-
-" set the commandheight
-set cmdheight=2
-
-" do not keep a backup files 
+" Do not keep a backup files 
 set nobackup
 set nowritebackup
 
-" show the cursor position all the time
+" Show the cursor position all the time
 set ruler
-
-" show (partial) commands
-set showcmd
 
 " Set status line
 set statusline=[%02n]\ %f\ %(\[%M%R%H]%)%=\ %4l,%02c%2V\ %P%*
@@ -77,20 +71,30 @@ set statusline=[%02n]\ %f\ %(\[%M%R%H]%)%=\ %4l,%02c%2V\ %P%*
 " Always display a status line at the bottom of the window
 set laststatus=2
 
-" showmatch: Show the matching bracket for the last ')'?
-set showmatch
+" Give some more height when showing commands
+set cmdheight=2
 
-" pressing < or > will let you indent/unident selected lines
-vnoremap < <gv
-vnoremap > >gv
+" Show (partial) commands
+set showcmd
 
-" widen/shrink split buffer
-if bufwinnr(1)
-  map + <c-W>>
-  map - <c-W><
-endif
+" Use j/k to escape
+:imap jk <Esc>
 
-colorscheme molokai
+" Gruvbox colorscheme
+colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'hard'
+set background=dark
 
-" Add ctrl-p plugin
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+" Gruvbox search highlighting cursor color inversion
+nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
+nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
+nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
+
+nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
+nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
+
+" Use powerline fonts for airline
+let g:airline_powerline_fonts = 1
+
+" Airline theme
+let g:airline_theme='wombat'
