@@ -1,0 +1,8 @@
+shell-integration-features = ssh-terminfo
+theme = Gruvbox Dark Hard
+font-size = 16
+
+# Map Cmd+K to send Ctrl+K (ASCII 11) for tmux to intercept
+keybind = cmd+k=text:\x0b
+
+keybind = shift+enter=text:\x1b\r
